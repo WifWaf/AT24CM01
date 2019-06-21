@@ -14,8 +14,8 @@
 |           small             |        medium       |      large           |    array     |
 |           :---:             |        :---:        |      :---:           |      :---:   |
 | bool                        | short               |  long                | char array   |
-| char Unlimited              | word                |  unsigned long       | byte array   |
-| unsigned char as Raw        | int                 |  float               |              |
+| char                        | word                |  unsigned long       | byte array   |
+| unsigned char               | int                 |  float               |              |
 | byte                        | unsigned int        |  double              |              |           
 
 
