@@ -1,3 +1,12 @@
+/*************************************************** 
+  Arduino library for the AT24CM01
+  
+  Author: Jonathan Dempsey JDWifWaf@gmail.com
+  
+  Version: 1.0.1
+  License: Apache 2.0
+ ****************************************************/
+
 #ifndef _AT24CM01_H
 #define _AT24CM01_H
 
