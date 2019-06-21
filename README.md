@@ -8,6 +8,7 @@
 * Supports Read / Write by variable type. Sizes are determined dynamically to support differences between devices.
 * Supports Read / Write of arrays of either byte / char.
 * Simple error checking of manualy entering sizes and addresses.
+* Supports a TwoWire reference (begin function)
 
 >**Read and Write by variable types of which are supported:*
 
