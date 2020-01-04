@@ -3,7 +3,7 @@
 
 AT24CM01 EEPROM;
 
-#define TEST_BOOL   (false)
+#define TEST_BOOL   (true)
 #define TEST_CHAR   ('A')
 #define TEST_UCHAR  (254) 
 #define TEST_BYTE   (254)
@@ -11,7 +11,7 @@ AT24CM01 EEPROM;
 #define TEST_WORD   (65535U)
 #define TEST_INT    (-32767)
 #define TEST_UINT   (65535U)
-#define TEST_LONG   (-2147483647L)
+#define TEST_LONG   (-2147483646L)
 #define TEST_ULONG  (4294967295UL)
 #define TEST_FLOAT  (-2.12345F)
 #define TEST_DOUBLE (-3.27677)
@@ -28,48 +28,40 @@ void VariableTestRead();
 
 void setup() 
 {
-  Serial.begin(115200); 
+  Serial.begin(115200);
 
-  EEPROM.begin(21, 22);   // <--- pass your I2C pins and optional third agument for a TwoWire instance
+  EEPROM.begin();  
 
   VariableTestWrite();
-  VariableTestRead();
-  
-  while(1==1);           // End test
+  VariableTestRead(); 
 }
 
 void loop(){}
 
 void VariableTestWrite()
 {
-  printf("\n\n ...........Writing Variables.............");
-
-  printf("\n          bool (%d): %s", sizeof(bool), TEST_BOOL ? "True" : "False"); EEPROM.writeBool(0, TEST_BOOL);
-  printf("\n          byte (%d): %d", sizeof(byte), TEST_BYTE); EEPROM.writeByte(2, TEST_BYTE);
-
-  printf("\n          char (%d): %c", sizeof(char), TEST_CHAR); EEPROM.writeChar(4, TEST_CHAR);
-  printf("\n unsigned char (%d): %d", sizeof(unsigned char), TEST_UCHAR); EEPROM.writeUnsignedChar(6, TEST_UCHAR);
-
-  printf("\n         short (%d): %hd", sizeof(short), TEST_SHORT); EEPROM.writeShort(8, TEST_SHORT);
-  printf("\n          word (%d): %hd", sizeof(word), TEST_WORD); EEPROM.writeShort(12, TEST_WORD);
-
-  printf("\n           int (%d): %d", sizeof(int), TEST_INT); EEPROM.writeInt(16, TEST_INT);
-  printf("\n  unsigned int (%d): %u", sizeof(unsigned int), TEST_UINT); EEPROM.writeUnsignedInt(24, TEST_UINT);
-
-  printf("\n          long (%d): %ld", sizeof(long), TEST_LONG); EEPROM.writeLong(32, TEST_LONG);
-  printf("\n unsigned long (%d): %lu", sizeof(unsigned long), TEST_ULONG); EEPROM.writeUnsignedLong(40, TEST_ULONG);
-
-  printf("\n         float (%d): %f", sizeof(float), TEST_FLOAT); EEPROM.writeFloat(48, TEST_FLOAT);
-  printf("\n        double (%d): %f", sizeof(double), TEST_DOUBLE); EEPROM.writeDouble(56, TEST_DOUBLE);
+  Serial.print("\n\n ...........Writing Variables.............");
+  Serial.print("\n          bool ("); Serial.print(sizeof(bool)); Serial.print(") "); TEST_BOOL ? Serial.print("True") : Serial.print("False");  EEPROM.writeBool(0, TEST_BOOL);
+  Serial.print("\n          byte ("); Serial.print(sizeof(byte)); Serial.print(") "); Serial.print(TEST_BYTE); EEPROM.writeByte(2, TEST_BYTE);
+  Serial.print("\n          char ("); Serial.print(sizeof(char)); Serial.print(") "); Serial.print(TEST_CHAR); EEPROM.writeChar(4, TEST_CHAR);
+  Serial.print("\n unsigned char ("); Serial.print(sizeof(unsigned char)); Serial.print(") "); Serial.print(TEST_UCHAR); EEPROM.writeUnsignedChar(6, TEST_UCHAR);
+  Serial.print("\n         short ("); Serial.print(sizeof(short)); Serial.print(") "); Serial.print(TEST_SHORT); EEPROM.writeShort(8, TEST_SHORT);
+  Serial.print("\n          word ("); Serial.print(sizeof(word)); Serial.print(") "); Serial.print(TEST_WORD); EEPROM.writeShort(12, TEST_WORD);
+  Serial.print("\n           int ("); Serial.print(sizeof(int)); Serial.print(") "); Serial.print(TEST_INT); EEPROM.writeShort(16, TEST_INT);
+  Serial.print("\n  unsigned int ("); Serial.print(sizeof(unsigned int)); Serial.print(") "); Serial.print(TEST_UINT); EEPROM.writeUnsignedInt(24, TEST_UINT);
+  Serial.print("\n          long ("); Serial.print(sizeof(long)); Serial.print(") "); Serial.print(TEST_LONG); EEPROM.writeLong(32, TEST_LONG);
+  Serial.print("\n unsigned long ("); Serial.print(sizeof(unsigned long)); Serial.print(") "); Serial.print(TEST_ULONG); EEPROM.writeLong(40, TEST_ULONG);  
+  Serial.print("\n         float ("); Serial.print(sizeof(float)); Serial.print(") "); Serial.print(TEST_FLOAT, 5); EEPROM.writeFloat(48, TEST_FLOAT);
+  Serial.print("\n        double ("); Serial.print(sizeof(double)); Serial.print(") "); Serial.print(TEST_DOUBLE, 5); EEPROM.writeDouble(56, TEST_DOUBLE);
   
-  printf("\n    array char (%d): ", TEST_ARRAYCHARINDEX);
+  Serial.print("\n    array char ("); Serial.print(TEST_ARRAYCHARINDEX); Serial.print(") ");
   for(uint8_t x = 0; x < TEST_ARRAYCHARINDEX; x++)
-    printf("%c ", testCharArray[x]); 
+    Serial.print(testCharArray[x]); 
   EEPROM.writeCharArray(64, testCharArray, TEST_ARRAYCHARINDEX);
 
-  printf("\n    array byte (%d): ", TEST_ARRAYBYTEINDEX);
+  Serial.print("\n    array byte ("); Serial.print(TEST_ARRAYBYTEINDEX); Serial.print(") ");
   for(uint8_t x = 0; x < TEST_ARRAYBYTEINDEX; x++)
-    printf("%d ", testByteArray[x]);
+    Serial.print(testByteArray[x]); 
   EEPROM.writeByteArray((64 + TEST_ARRAYCHARINDEX), testByteArray, TEST_ARRAYBYTEINDEX);
 }
 
@@ -78,35 +70,28 @@ void VariableTestRead()
   char buffCharArray[TEST_ARRAYCHARINDEX];
   byte buffByteArray[TEST_ARRAYBYTEINDEX];
 
-  printf("\n\n ..........Reading Variables..............");
+  Serial.print("\n\n ..........Reading Variables..............");
 
-  printf("\n          bool (%d): %s", sizeof(bool), EEPROM.readBool(0) ? "True" : "False");
-  printf("\n          byte (%d): %d", sizeof(byte), EEPROM.readByte(2));
+  Serial.print("\n          bool ("); Serial.print(sizeof(bool)); Serial.print(") "); EEPROM.readBool(0) ? Serial.print("True") : Serial.print("False");
+  Serial.print("\n          byte ("); Serial.print(sizeof(byte)); Serial.print(") "); Serial.print(EEPROM.readByte(2));
+  Serial.print("\n          char ("); Serial.print(sizeof(char)); Serial.print(") "); Serial.print(EEPROM.readChar(4));
+  Serial.print("\n unsigned char ("); Serial.print(sizeof(unsigned char)); Serial.print(") "); Serial.print( EEPROM.readUnsignedChar(6));
+  Serial.print("\n         short ("); Serial.print(sizeof(short)); Serial.print(") "); Serial.print(EEPROM.readShort(8));
+  Serial.print("\n          word ("); Serial.print(sizeof(word)); Serial.print(") "); Serial.print(EEPROM.readword(12));
+  Serial.print("\n           int ("); Serial.print(sizeof(int)); Serial.print(") "); Serial.print(EEPROM.readInt(16)); 
+  Serial.print("\n  unsigned int ("); Serial.print(sizeof(unsigned int)); Serial.print(") "); Serial.print(EEPROM.readUnsignedInt(24)); 
+  Serial.print("\n          long ("); Serial.print(sizeof(long)); Serial.print(") "); Serial.print(EEPROM.readLong(32)); 
+  Serial.print("\n unsigned long ("); Serial.print(sizeof(unsigned long)); Serial.print(") "); Serial.print( EEPROM.readUnsignedLong(40)); 
+  Serial.print("\n         float ("); Serial.print(sizeof(float)); Serial.print(") "); Serial.print(EEPROM.readFloat(48), 5);
+  Serial.print("\n        double ("); Serial.print(sizeof(double)); Serial.print(") "); Serial.print(EEPROM.readDouble(56), 5); 
 
-  printf("\n          char (%d): %c", sizeof(char), EEPROM.readChar(4));
-  printf("\n unsigned char (%d): %d", sizeof(unsigned char), EEPROM.readUnsignedChar(6));
-
-  printf("\n         short (%d): %hd", sizeof(short), EEPROM.readShort(8));
-  printf("\n          word (%d): %hd", sizeof(word), EEPROM.readword(12));
-
-  printf("\n           int (%d): %d", sizeof(int), EEPROM.readInt(16));
-  printf("\n  unsigned int (%d): %d", sizeof(unsigned int), EEPROM.readUnsignedInt(24));
-
-  printf("\n          long (%d): %ld", sizeof(long), EEPROM.readLong(32));
-  printf("\n unsigned long (%d): %lu", sizeof(unsigned long), EEPROM.readUnsignedLong(40));
-
-  printf("\n         float (%d): %f", sizeof(float), EEPROM.readFloat(48));
-  printf("\n        double (%d): %f", sizeof(double), EEPROM.readDouble(56));
-    
-  EEPROM.readCharArray(64, buffCharArray, TEST_ARRAYCHARINDEX); 
-  printf("\n    array char (%d): ", TEST_ARRAYCHARINDEX);
+  EEPROM.readCharArray(64, buffCharArray, TEST_ARRAYCHARINDEX);
+  Serial.print("\n    array char ("); Serial.print(TEST_ARRAYCHARINDEX); Serial.print(") ");
   for(uint8_t x = 0; x < TEST_ARRAYCHARINDEX; x++)
-    printf("%c ", buffCharArray[x]);
+    Serial.print(buffCharArray[x]); 
 
-  EEPROM.readByteArray((64+TEST_ARRAYCHARINDEX), buffByteArray, TEST_ARRAYBYTEINDEX); 
-  printf("\n    array byte (%d): ", TEST_ARRAYBYTEINDEX);
+  EEPROM.readByteArray((64 + TEST_ARRAYCHARINDEX), buffByteArray, TEST_ARRAYBYTEINDEX); 
+  Serial.print("\n    array byte ("); Serial.print(TEST_ARRAYBYTEINDEX); Serial.print(") ");
   for(uint8_t x = 0; x < TEST_ARRAYBYTEINDEX; x++)
-    printf("%d ", buffByteArray[x]);
-
-  printf("\n ");    // Flush
+    Serial.print(buffByteArray[x]);
 }

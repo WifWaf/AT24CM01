@@ -21,7 +21,7 @@
 class AT24CM01
 {
     public:
-        void begin(uint8_t sda, uint8_t sdl, TwoWire &inWire = Wire);
+        void begin(TwoWire &inWire = Wire);
 
         uint32_t read(uint32_t address, uint8_t size = 1);
         void read(uint32_t address, uint8_t data[], uint8_t indexCount);
@@ -126,7 +126,6 @@ class AT24CM01
 
     protected:
     private:
-        uint8_t _sda, _sdl;          // I2C pins
         TwoWire* ATWire;             // TwoWire library isntance
         union conv {
                 float fval;
