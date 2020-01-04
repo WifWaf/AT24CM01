@@ -1,5 +1,5 @@
 # AT24CM01
-![Version](https://img.shields.io/badge/Version-v2.0.0-green.svg)
+![Version](https://img.shields.io/badge/Version-v2.1.0-green.svg)
 
  EEPROM Library for the Atmel AT24CM01 using the Arduino platform.
 
