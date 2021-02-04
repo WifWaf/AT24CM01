@@ -130,7 +130,7 @@ class AT24CM01
         union conv {
                 float fval;
                 double dval;
-                uint8_t bval[sizeof(float)];
+                uint8_t bval[sizeof(double)];
         } mkconv;
 };
 
