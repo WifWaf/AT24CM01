@@ -88,7 +88,7 @@ void AT24CM01::write(uint32_t address, uint32_t data)
     return;
 
   this->ATWire->beginTransmission((uint8_t)GETADR(address));                // Start, and determine segment address 
-  this->ATWire->write((uint8_t)((address & 0xFF00) >> 8));                  // Set curser to address for writing
+  this->ATWire->write((uint8_t)((address & 0x00FF) >> 8));                  // Set curser to address for writing
   this->ATWire->write((uint8_t)(address & 0xFF));
   
   uint8_t sBuff = 0;
@@ -108,7 +108,7 @@ void AT24CM01::write(uint32_t address, uint32_t data, uint8_t size)
   if(CHCKADDR(address) || CHCKSIZE(size))
     return;
   this->ATWire->beginTransmission((uint8_t)GETADR(address));                 // Start, and determine segment address 
-  this->ATWire->write((uint8_t)((address & 0xFF00) >> 8));                   // Set curser to address for writing
+  this->ATWire->write((uint8_t)((address & 0x00FF) >> 8));                   // Set curser to address for writing
   this->ATWire->write((uint8_t)(address & 0xFF));
   
   uint8_t sBuff = 0;
@@ -129,7 +129,7 @@ void AT24CM01::write(uint32_t address, uint8_t data[], uint8_t indexCount)
     return;
   
   this->ATWire->beginTransmission((uint8_t)GETADR(address));
-  this->ATWire->write((uint8_t)((address & 0xFF00) >> 8));
+  this->ATWire->write((uint8_t)((address & 0x00FF) >> 8));
   this->ATWire->write((uint8_t)(address & 0xFF));
   
   for(uint8_t x = 0; x < indexCount; x++)
