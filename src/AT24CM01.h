@@ -22,6 +22,7 @@ class AT24CM01
 {
     public:
         AT24CM01(uint8_t at_dev_adr = ATDEVADR);
+  
         void begin(TwoWire &inWire = Wire);
 
         uint32_t read(uint32_t address, uint8_t size = 1);
