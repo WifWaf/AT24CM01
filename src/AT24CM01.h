@@ -16,11 +16,12 @@
 #define ATWDelay 5                   // Delay to allow write to be completed (datasheet shows max 5ms)
 #define AT2CSPEED 400000             // Clock speed for I2C
 #define ATMAXADR 131072              // Size of EEPROM in words
-#define ATDEVADR 0x50                // Lowest page address
+#define ATDEVADR 0x50                // Lowest page address (default initialiser value)
 
 class AT24CM01
 {
     public:
+        AT24CM01(uint8_t at_dev_adr = ATDEVADR);
         void begin(TwoWire &inWire = Wire);
 
         uint32_t read(uint32_t address, uint8_t size = 1);
@@ -127,10 +128,11 @@ class AT24CM01
     protected:
     private:
         TwoWire* ATWire;             // TwoWire library isntance
+        uint8_t _at_dev_adr;
         union conv {
                 float fval;
                 double dval;
-                uint8_t bval[sizeof(float)];
+                uint8_t bval[sizeof(double)];
         } mkconv;
 };
 
