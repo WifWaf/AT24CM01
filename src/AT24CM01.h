@@ -1,6 +1,6 @@
 /*
   Author: Jonathan Dempsey JDWifWaf@gmail.com
-  Version: 1.1.0
+  Version: 2.3.0
   License: Apache 2.0
 */
 
