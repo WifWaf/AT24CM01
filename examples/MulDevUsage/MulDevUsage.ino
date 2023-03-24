@@ -9,7 +9,7 @@
 #include "AT24CM01.h"
 
 
-AT24CM01 eeprom_dev1, eeprom_dev2;
+AT24CM01 eeprom;
 
 
 void write(AT24CM01 &eeprom)
@@ -45,23 +45,23 @@ void setup()
 
   Serial.begin(9600);
 
-  eeprom_dev1.begin();
-  eeprom_dev2.begin();
-
-  // setting device address for eeprom device 2
-  eeprom_dev2.setDeviceAddress(ATDEVADR1);
+  eeprom.begin();
 
   Serial.println("Writing to device 0x50");
-  write(eeprom_dev1); // 0x50
+  eeprom.setDeviceAddress(ATDEVADR0);
+  write(eeprom); // 0x50
 
   Serial.println("Writing to device 0x52");
-  write(eeprom_dev2); // 0x52
+  eeprom.setDeviceAddress(ATDEVADR1);
+  write(eeprom); // 0x52
 
   Serial.println("Reading to device 0x50");
-  read(eeprom_dev1);  // 0x50
+  eeprom.setDeviceAddress(ATDEVADR0);
+  read(eeprom);  // 0x50
 
   Serial.println("Reading to device 0x52");
-  read(eeprom_dev2);  // 0x52
+  eeprom.setDeviceAddress(ATDEVADR1);
+  read(eeprom);  // 0x52
 }
 
 void loop(){}
