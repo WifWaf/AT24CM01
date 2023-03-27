@@ -40,9 +40,6 @@ void read(AT24CM01 &eeprom)
 
 void setup()
 {
-
-  uint8_t buffer[8] {};
-
   Serial.begin(9600);
 
   eeprom.begin();
