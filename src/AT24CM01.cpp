@@ -96,7 +96,7 @@ void AT24CM01::read(uint32_t address, uint8_t data[], uint8_t indexCount)
   this->ATWire->requestFrom((uint8_t)GETADR(address, ATDevAdr), indexCount);
   if (this->ATWire->available())
   {
-    for (uint8_t x = 0; x <= indexCount; x++)
+    for (uint16_t x = 0; x <= indexCount; x++)
       data[x] = this->ATWire->read();
   }
 }
@@ -180,7 +180,7 @@ void AT24CM01::write(uint32_t address, uint8_t data[], uint8_t indexCount)
   this->ATWire->write((uint8_t)((address & 0xFF00) >> 8));
   this->ATWire->write((uint8_t)(address & 0xFF));
 
-  for (uint8_t x = 0; x <= indexCount; x++)
+  for (uint16_t x = 0; x <= indexCount; x++)
     this->ATWire->write(data[x]);
 
   this->ATWire->endTransmission();
