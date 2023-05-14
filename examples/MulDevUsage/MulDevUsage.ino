@@ -9,56 +9,59 @@
 #include "AT24CM01.h"
 
 
-AT24CM01 eeprom;
+AT24CM01 EEPROM;
 
 
-void write(AT24CM01 &eeprom)
+void write(AT24CM01 &EEPROM)
 {
-  uint8_t data[] {0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC, 0xDE, 0xF0};
+  uint8_t send_data[8] {0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC, 0xDE, 0xF0};
 
-  for (int i = 0; i < 8; i++) {
-    Serial.printf("0x%x, ", data[i]);
+  for (int i = 0; i < 8; i++)
+  {
+    Serial.print(send_data[i], HEX);
+    Serial.print(" ");
   }
   Serial.println();
 
-  eeprom.writeByteArray(0, data, sizeof(data));
+  EEPROM.writeByteArray(0, send_data, 8);
 }
 
 
-void read(AT24CM01 &eeprom)
+void read(AT24CM01 &EEPROM)
 {
-  uint8_t buff[8] {};
+  uint8_t read_data[8] {0, 0, 0, 0, 0, 0, 0, 0};
 
-  eeprom.readByteArray(0, buff, sizeof(buff));
+  EEPROM.readByteArray(0, read_data, 8);
 
-  for (int i = 0; i < 8; i++) {
-    Serial.printf("0x%x, ", buff[i]);
+  for (int i = 0; i < 8; i++)
+  {
+    Serial.print(read_data[i], HEX);
+    Serial.print(" ");
   }
   Serial.println();
 }
-
 
 void setup()
 {
   Serial.begin(9600);
 
-  eeprom.begin();
+  EEPROM.begin();
 
   Serial.println("Writing to device 0x50");
-  eeprom.setDeviceAddress(ATDEVADR0);
-  write(eeprom); // 0x50
+  EEPROM.setDeviceAddress(ATDEVADR0); // 0x50
+  write(EEPROM);
 
   Serial.println("Writing to device 0x52");
-  eeprom.setDeviceAddress(ATDEVADR1);
-  write(eeprom); // 0x52
+  EEPROM.setDeviceAddress(ATDEVADR1); // 0x52
+  write(EEPROM);
 
-  Serial.println("Reading to device 0x50");
-  eeprom.setDeviceAddress(ATDEVADR0);
-  read(eeprom);  // 0x50
+  Serial.println("Reading from device 0x50");
+  EEPROM.setDeviceAddress(ATDEVADR0); // 0x50
+  read(EEPROM);
 
-  Serial.println("Reading to device 0x52");
-  eeprom.setDeviceAddress(ATDEVADR1);
-  read(eeprom);  // 0x52
+  Serial.println("Reading from device 0x52");
+  EEPROM.setDeviceAddress(ATDEVADR1);  // 0x52
+  read(EEPROM);
 }
 
 void loop(){}
